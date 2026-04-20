@@ -64,7 +64,7 @@ def format_env_line(
 
     """
     if quote_values and needs_quotes(env_value):
-        env_value = f'"{escape(env_value)}"'  # noqa: PLW2901
+        env_value = f'"{escape(env_value)}"'
     return f'{env_name}={env_value}\n'
 
 
