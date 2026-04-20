@@ -3,6 +3,14 @@
 We follow semantic versioning.
 
 
+## 1.7.0
+
+### Features
+
+- Adds `--no-quote-values` CLI option to disable quoted output for values
+  with spaces and other special characters
+
+
 ## Version 1.6.0
 
 ### Features

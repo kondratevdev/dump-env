@@ -5,3 +5,4 @@ def test_help_option(delegator):
     assert '--template TEMPLATE' in variables
     assert '--prefix PREFIX' in variables
     assert '--strict' in variables
+    assert '--no-quote-values' in variables

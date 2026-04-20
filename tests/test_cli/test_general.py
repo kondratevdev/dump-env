@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 
 def test_simple_usage(monkeypatch, delegator):
     """Check that cli shows prefixed variables."""
@@ -42,3 +44,28 @@ def test_simple_usage_file_output(monkeypatch, tmpdir, delegator):
 
     delegator(f'dump-env -p SOM_TT_ > {filename}')
     assert Path(filename).read_text(encoding='utf-8') == 'VALUE=1\n'
+
+
+@pytest.mark.parametrize(
+    ('command', 'expected'),
+    [
+        ('dump-env -p SOM_TT_', 'VALUE="first second"\n'),
+        ('dump-env -p SOM_TT_ --no-quote-values', 'VALUE=first second\n'),
+    ],
+)
+def test_quote_values_option(monkeypatch, delegator, *, command, expected):
+    """Check that cli quotes values depending on the selected option."""
+    monkeypatch.setenv('SOM_TT_VALUE', 'first second')
+
+    variables = delegator(command)
+    assert variables == expected
+
+
+def test_no_quote_values_file_output(monkeypatch, tmpdir, delegator):
+    """Check that cli puts unquoted values into file correctly."""
+    monkeypatch.setenv('SOM_TT_VALUE', 'first second')
+
+    filename = tmpdir.mkdir('tests').join('.env').strpath
+
+    delegator(f'dump-env -p SOM_TT_ --no-quote-values > {filename}')
+    assert Path(filename).read_text(encoding='utf-8') == 'VALUE=first second\n'
