@@ -126,6 +126,17 @@ $ dump-env -s template.env --strict-source
 Missing env vars: TOKEN, VALUE
 ```
 
+### Unquoted values
+
+If you use `dotenv-linter`, you may want to disable quoted output:
+
+```bash
+$ dump-env -t .env.template -p SECRET_ --no-quote-values > .env
+```
+
+By default, `dump-env` quotes values with spaces and other special
+characters to preserve compatibility with .env parsers.
+
 ## Creating secret variables in some CIs
 
 - [travis docs](https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml)
