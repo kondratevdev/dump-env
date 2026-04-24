@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -54,16 +54,18 @@ def test_multiple_prefixes(
 
 def test_simple_usage_file_output(
     monkeypatch: pytest.MonkeyPatch,
-    tmpdir: Any,
+    tmp_path: Path,
     delegator: 'DelegatorFactory',
 ) -> None:
     """Check that CLI puts prefixed variables into file correctly."""
     monkeypatch.setenv('SOME_TT_VALUE', '1')
 
-    filename = tmpdir.mkdir('tests').join('.env').strpath
+    output_dir = tmp_path / 'tests'
+    output_dir.mkdir()
+    env_file = output_dir / '.env'
 
-    delegator(f'dump-env -p SOME_TT_ > {filename}')
-    assert Path(filename).read_text(encoding='utf-8') == 'VALUE=1\n'
+    delegator(f'dump-env -p SOME_TT_ > {env_file}')
+    assert env_file.read_text(encoding='utf-8') == 'VALUE=1\n'
 
 
 @pytest.mark.parametrize(
@@ -73,7 +75,13 @@ def test_simple_usage_file_output(
         ('dump-env -p SOM_TT_ --no-quote-values', 'VALUE=first second\n'),
     ],
 )
-def test_quote_values_option(monkeypatch, delegator, *, command, expected):
+def test_quote_values_option(
+    monkeypatch: pytest.MonkeyPatch,
+    delegator: 'DelegatorFactory',
+    *,
+    command: str,
+    expected: str,
+) -> None:
     """Check that cli quotes values depending on the selected option."""
     monkeypatch.setenv('SOM_TT_VALUE', 'first second')
 
@@ -81,11 +89,17 @@ def test_quote_values_option(monkeypatch, delegator, *, command, expected):
     assert variables == expected
 
 
-def test_no_quote_values_file_output(monkeypatch, tmpdir, delegator):
+def test_no_quote_values_file_output(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    delegator: 'DelegatorFactory',
+) -> None:
     """Check that cli puts unquoted values into file correctly."""
     monkeypatch.setenv('SOM_TT_VALUE', 'first second')
 
-    filename = tmpdir.mkdir('tests').join('.env').strpath
+    output_dir = tmp_path / 'tests'
+    output_dir.mkdir()
+    env_file = output_dir / '.env'
 
-    delegator(f'dump-env -p SOM_TT_ --no-quote-values > {filename}')
-    assert Path(filename).read_text(encoding='utf-8') == 'VALUE=first second\n'
+    delegator(f'dump-env -p SOM_TT_ --no-quote-values > {env_file}')
+    assert env_file.read_text(encoding='utf-8') == 'VALUE=first second\n'
