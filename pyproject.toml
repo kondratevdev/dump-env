@@ -152,6 +152,66 @@ pydocstyle.convention = "google"
 ]
 
 
+[tool.pytest.ini_options]
+# pytest config: http://doc.pytest.org/en/latest/customize.html
+norecursedirs = [
+  "*.egg",
+  ".eggs",
+  "dist",
+  "build",
+  "docs",
+  ".tox",
+  ".git",
+  "__pycache__",
+]
+# Strict `@xfail` by default:
+xfail_strict = true
+# Fail on warnings:
+filterwarnings = ["error"]
+
+addopts = [
+  "--strict-config",
+  "--strict-markers",
+  "--doctest-modules",
+  # Output:
+  "--tb=short",
+  # Coverage:
+  "--cov=dump_env",
+  "--cov=tests",
+  "--cov-branch",
+  "--cov-report=term-missing:skip-covered",
+  "--cov-report=html",
+  "--cov-report=xml",
+  "--cov-fail-under=100",
+]
+
+
+[tool.coverage.run]
+# Covdefaults: https://pypi.org/project/covdefaults
+patch = ["subprocess"]
+
+
+[tool.mypy]
+# The mypy configurations: http://bit.ly/2zEl9WI
+strict = true
+strict_bytes = true
+local_partial_types = true
+warn_unreachable = true
+
+enable_error_code = [
+  "truthy-bool",
+  "truthy-iterable",
+  "redundant-expr",
+  "unused-awaitable",
+  "ignore-without-code",
+  "possibly-undefined",
+  "redundant-self",
+  "explicit-override",
+  "unimported-reveal",
+  "deprecated",
+]
+
+
 [tool.codespell]
 # codespell configuration: https://github.com/codespell-project/codespell
 skip = [

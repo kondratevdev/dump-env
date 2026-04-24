@@ -22,7 +22,7 @@ sys.path.insert(0, Path('..').resolve().as_posix())
 # -- Project information -----------------------------------------------------
 
 
-def _get_project_meta() -> dict[str, Any]:
+def _get_project_meta() -> Any:
     with Path('../pyproject.toml').open(mode='rb') as pyproject:
         return tomli.load(pyproject)['tool']['poetry']
 
