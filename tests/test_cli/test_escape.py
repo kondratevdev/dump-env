@@ -1,7 +1,18 @@
 import json
+from typing import TYPE_CHECKING
+
+import pytest
+from syrupy.assertion import SnapshotAssertion
+
+if TYPE_CHECKING:
+    from tests.conftest import DelegatorFactory
 
 
-def test_quote_escape(monkeypatch, delegator, snapshot):
+def test_quote_escape(
+    monkeypatch: pytest.MonkeyPatch,
+    delegator: 'DelegatorFactory',
+    snapshot: SnapshotAssertion,
+) -> None:
     """Check that cli escapes."""
     multiline_value = {
         'key': 'value',

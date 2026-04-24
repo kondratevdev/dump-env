@@ -42,17 +42,11 @@ jobs:
       run: |
         poetry config virtualenvs.in-project true
         poetry run pip install -U pip
-        poetry install
+        poetry install --with docs
 
     - name: Run tests
       run: |
-        poetry run ruff check --exit-non-zero-on-fix --diff
-        poetry run ruff format --check --diff
-        poetry run flake8 .
-        poetry run mypy dump_env
-        poetry run pytest
-        poetry check
-        poetry run pip check
+        make test
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v6

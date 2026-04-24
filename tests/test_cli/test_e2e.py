@@ -1,10 +1,19 @@
 import json
 from pathlib import Path
+from typing import TYPE_CHECKING
 
+import pytest
 from dotenv import dotenv_values
 
+if TYPE_CHECKING:
+    from tests.conftest import DelegatorFactory
 
-def test_complex_variables_compatibility(monkeypatch, tmpdir, delegator):
+
+def test_complex_variables_compatibility(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    delegator: 'DelegatorFactory',
+) -> None:
     """Test that dump-env output is compatible with python-dotenv loading."""
     # Set up complex environment variables
     complex_vars = {
@@ -29,7 +38,7 @@ def test_complex_variables_compatibility(monkeypatch, tmpdir, delegator):
         monkeypatch.setenv(f'MY_PREFIX_{key}', env_value)
 
     # Create temporary .env file
-    env_file = Path(tmpdir) / '.env'
+    env_file = tmp_path / '.env'
 
     # Dump environment variables to file
     delegator(f'dump-env -p MY_PREFIX_ > {env_file}')

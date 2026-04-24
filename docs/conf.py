@@ -12,6 +12,7 @@
 
 import sys
 from pathlib import Path
+from typing import Any
 
 import tomli
 
@@ -21,9 +22,9 @@ sys.path.insert(0, Path('..').resolve().as_posix())
 # -- Project information -----------------------------------------------------
 
 
-def _get_project_meta():
+def _get_project_meta() -> dict[str, Any]:
     with Path('../pyproject.toml').open(mode='rb') as pyproject:
-        return tomli.load(pyproject)['tool']['poetry']
+        return tomli.load(pyproject)['tool']['poetry']  # type: ignore[no-any-return]
 
 
 pkg_meta = _get_project_meta()
@@ -97,16 +98,16 @@ html_theme = 'furo'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {}
+html_theme_options: dict[str, Any] = {}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
+html_static_path: list[str] = []
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
 #
 # This is required for the alabaster theme
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
-html_sidebars = {}
+html_sidebars: dict[str, list[str]] = {}
