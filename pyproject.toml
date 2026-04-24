@@ -158,7 +158,6 @@ skip = [
   "__pycache__",
   "_build",
   ".mypy_cache",
-  "*.js",
   "*.lock",
 ]
 
@@ -169,6 +168,5 @@ files.extend-exclude = [
   "__pycache__",
   "_build",
   ".mypy_cache",
-  "*.js",
   "*.lock",
 ]
