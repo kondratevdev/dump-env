@@ -1,4 +1,16 @@
-def test_source_vars(monkeypatch, env_file, delegator):
+from typing import TYPE_CHECKING
+
+import pytest
+
+if TYPE_CHECKING:
+    from tests.conftest import DelegatorFactory
+
+
+def test_source_vars(
+    monkeypatch: pytest.MonkeyPatch,
+    env_file: str,
+    delegator: 'DelegatorFactory',
+) -> None:
     """Check that cli shows only source variables."""
     monkeypatch.setenv('NORMAL_KEY', '1')
     monkeypatch.setenv('EXTRA_VALUE', '2')
@@ -7,7 +19,11 @@ def test_source_vars(monkeypatch, env_file, delegator):
     assert variables == 'NORMAL_KEY=1\n'
 
 
-def test_source_prefixes(monkeypatch, env_file, delegator):
+def test_source_prefixes(
+    monkeypatch: pytest.MonkeyPatch,
+    env_file: str,
+    delegator: 'DelegatorFactory',
+) -> None:
     """Check that cli allows prefixes with source."""
     monkeypatch.setenv('NORMAL_KEY', '1')
     monkeypatch.setenv('EXTRA_VALUE', '2')
@@ -16,7 +32,11 @@ def test_source_prefixes(monkeypatch, env_file, delegator):
     assert variables == 'NORMAL_KEY=1\nVALUE=2\n'
 
 
-def test_source_strict(monkeypatch, env_file, delegator):
+def test_source_strict(
+    monkeypatch: pytest.MonkeyPatch,
+    env_file: str,
+    delegator: 'DelegatorFactory',
+) -> None:
     """Check that cli works correctly with strict-source."""
     monkeypatch.setenv('NORMAL_KEY', '1')
     monkeypatch.setenv('EXTRA_VALUE', '2')
@@ -27,7 +47,11 @@ def test_source_strict(monkeypatch, env_file, delegator):
     assert variables == 'NORMAL_KEY=1\n'
 
 
-def test_source_strict_fail(monkeypatch, env_file, delegator):
+def test_source_strict_fail(
+    monkeypatch: pytest.MonkeyPatch,
+    env_file: str,
+    delegator: 'DelegatorFactory',
+) -> None:
     """Check that cli works correctly with strict-source missing keys."""
     monkeypatch.setenv('EXTRA_VALUE', '2')
 

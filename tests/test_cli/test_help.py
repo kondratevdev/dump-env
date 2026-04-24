@@ -1,4 +1,10 @@
-def test_help_option(delegator):
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from tests.conftest import DelegatorFactory
+
+
+def test_help_option(delegator: 'DelegatorFactory') -> None:
     """Check that cli shows help."""
     variables = delegator('dump-env --help')
     assert 'show this help message and exit' in variables

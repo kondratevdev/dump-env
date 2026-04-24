@@ -16,24 +16,31 @@ To activate your `virtualenv` run `poetry shell`.
 
 ## Tests
 
-We use `pytest`, `flake8` and various pre-commit hooks for quality control.
+We use `pytest`, `flake8`, `ruff`, `mypy`, and various pre-commit hooks
+for quality control.
 
 To run all tests:
 
 ```bash
-pytest
+make unit
 ```
 
 To run linting:
 
 ```bash
-flake8 .
+make lint
+```
+
+To run all checks:
+
+```bash
+make test
 ```
 
 To update snapshots:
 
 ```bash
-pytest --snapshot-update
+poetry run pytest --snapshot-update
 ```
 
 These steps are mandatory during the CI.
@@ -51,7 +58,7 @@ We use `mypy` to run type checks on our code.
 To use it:
 
 ```bash
-mypy dump_env
+make type-check
 ```
 
 This step is mandatory during the CI.
@@ -86,10 +93,7 @@ Before submitting your code please do the following steps:
 3. Add tests for the new changes
 4. Edit documentation if you have changed something significant
 5. Update `CHANGELOG.md` with a quick summary of your changes
-6. Run `pytest` again to make sure it is still working
-7. Run `mypy` to ensure that types are correct
-8. Run `flake8` to ensure that style is correct
-9. Run `doc8` to ensure that docs are correct
+6. Run `make test` to make sure it is still working
 
 
 ## Other help

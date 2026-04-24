@@ -150,3 +150,25 @@ pydocstyle.convention = "google"
   "S603", # subprocess
   "S607", # subprocess partial path
 ]
+
+
+[tool.codespell]
+# codespell configuration: https://github.com/codespell-project/codespell
+skip = [
+  "__pycache__",
+  "_build",
+  ".mypy_cache",
+  "*.js",
+  "*.lock",
+]
+
+
+[tool.typos]
+# typos configuration: https://github.com/crate-ci/typos/
+files.extend-exclude = [
+  "__pycache__",
+  "_build",
+  ".mypy_cache",
+  "*.js",
+  "*.lock",
+]
