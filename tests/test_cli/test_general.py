@@ -69,8 +69,8 @@ def test_simple_usage_file_output(
 @pytest.mark.parametrize(
     ('command', 'expected'),
     [
-        ('dump-env -p SOM_TT_', 'VALUE="first second"\n'),
-        ('dump-env -p SOM_TT_ --no-quote-values', 'VALUE=first second\n'),
+        ('dump-env -p SOME_TT_', 'VALUE="first second"\n'),
+        ('dump-env -p SOME_TT_ --no-quote-values', 'VALUE=first second\n'),
     ],
 )
 def test_quote_values_option(
@@ -81,7 +81,7 @@ def test_quote_values_option(
     expected: str,
 ) -> None:
     """Check that cli quotes values depending on the selected option."""
-    monkeypatch.setenv('SOM_TT_VALUE', 'first second')
+    monkeypatch.setenv('SOME_TT_VALUE', 'first second')
 
     variables = delegator(command)
     assert variables == expected
@@ -93,11 +93,11 @@ def test_no_quote_values_file_output(
     delegator: 'DelegatorFactory',
 ) -> None:
     """Check that cli puts unquoted values into file correctly."""
-    monkeypatch.setenv('SOM_TT_VALUE', 'first second')
+    monkeypatch.setenv('SOME_TT_VALUE', 'first second')
 
     output_dir = tmp_path / 'tests'
     output_dir.mkdir()
     env_file = output_dir / '.env'
 
-    delegator(f'dump-env -p SOM_TT_ --no-quote-values > {env_file}')
+    delegator(f'dump-env -p SOME_TT_ --no-quote-values > {env_file}')
     assert env_file.read_text(encoding='utf-8') == 'VALUE=first second\n'
