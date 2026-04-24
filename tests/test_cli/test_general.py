@@ -6,8 +6,6 @@ import pytest
 if TYPE_CHECKING:
     from tests.conftest import DelegatorFactory
 
-import pytest
-
 
 def test_simple_usage(
     monkeypatch: pytest.MonkeyPatch,
